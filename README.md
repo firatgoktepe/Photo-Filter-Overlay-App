@@ -2,7 +2,7 @@
 
 ### Description
 
-
+This app allows you to filter your photos and overlay it some masks inside the app built with React/Next.js in Cloudinary
 
 
 ```
