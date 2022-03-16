@@ -7,6 +7,7 @@ import Button from '@components/Button';
 
 import styles from '@styles/Home.module.scss';
 import Webcam from 'react-webcam';
+import { Cloudinary } from '@cloudinary/url-gen';
 
 const cameraWidth = 720
 const cameraHeight = 720
@@ -22,12 +23,29 @@ const videoConstraints = {
   aspectRatio
 }
 
+const cloudinary = new Cloudinary({
+  cloud: {
+    cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+  },
+  url: {
+    secure: true
+  }
+});
+
 
 export default function Home() {
 
   const webcamRef = useRef();
   const [image, setImage] = useState()
   const [cldData, setCldData] = useState()
+
+  let src = image;
+  const cldImage = cldData && cloudinary.image(cldData.public_id);
+
+  if ( cldImage ) {
+   src = cldImage.toURL();
+  }
+
 
   useEffect(() => {
     if (!image) return
@@ -64,8 +82,8 @@ export default function Home() {
           <div className={styles.stageContainer}>
             <div className={styles.stage}>
 
-              {image && (<img src={cldData?.secure_url || image} alt="screenshot" />)}
-              {!image && (<Webcam ref={webcamRef} videoConstraints={videoConstraints} width={cameraWidth} heigth={cameraHeight} />)}
+              {src && (<img src={src} alt="screenshot" />)}
+              {!src && (<Webcam ref={webcamRef} videoConstraints={videoConstraints} width={cameraWidth} heigth={cameraHeight} />)}
 
             </div>
           </div>
