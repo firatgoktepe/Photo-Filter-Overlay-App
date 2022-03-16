@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import Head from 'next/head';
 
 import Layout from '@components/Layout';
@@ -5,8 +6,33 @@ import Container from '@components/Container';
 import Button from '@components/Button';
 
 import styles from '@styles/Home.module.scss';
+import Webcam from 'react-webcam';
+
+const cameraWidth = 720
+const cameraHeight = 720
+const aspectRatio = cameraWidth / cameraHeight
+
+const videoConstraints = {
+  width: {
+    min: cameraWidth,
+  },
+  height: {
+    min: cameraHeight,
+  },
+  aspectRatio
+}
+
 
 export default function Home() {
+
+  const webcamRef = useRef();
+  const [image, setImage] = useState()
+
+  const handleCaptureScreenshot = () => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    setImage(imageSrc)
+  }
+
   return (
     <Layout>
       <Head>
@@ -20,19 +46,22 @@ export default function Home() {
 
           <div className={styles.stageContainer}>
             <div className={styles.stage}>
-              <img src="/images/mountain-1200x1200.jpg" />
+              
+              {image && (<img src={image} alt="screenshot" />)}
+              {!image && (<Webcam ref={webcamRef} videoConstraints={videoConstraints} width={cameraWidth} heigth={cameraHeight} />)}
+
             </div>
           </div>
 
           <div className={styles.controls}>
             <ul>
               <li>
-                <Button>
+                <Button onClick={handleCaptureScreenshot} >
                   Capture photo
                 </Button>
               </li>
               <li>
-                <Button color="red">
+                <Button onClick={ () => setImage(undefined) } color="red">
                   Reset
                 </Button>
               </li>
