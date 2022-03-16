@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Head from 'next/head';
 
 import Layout from '@components/Layout';
@@ -27,6 +27,23 @@ export default function Home() {
 
   const webcamRef = useRef();
   const [image, setImage] = useState()
+  const [cldData, setCldData] = useState()
+
+  useEffect(() => {
+    if (!image) return
+
+    (async function run() {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: JSON.stringify({
+          image
+        })
+      }).then(r => r.json())
+      console.log('response', response)
+      setCldData(response)
+    })()
+
+  }, [image])
 
   const handleCaptureScreenshot = () => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -46,8 +63,8 @@ export default function Home() {
 
           <div className={styles.stageContainer}>
             <div className={styles.stage}>
-              
-              {image && (<img src={image} alt="screenshot" />)}
+
+              {image && (<img src={cldData?.secure_url || image} alt="screenshot" />)}
               {!image && (<Webcam ref={webcamRef} videoConstraints={videoConstraints} width={cameraWidth} heigth={cameraHeight} />)}
 
             </div>
@@ -61,7 +78,7 @@ export default function Home() {
                 </Button>
               </li>
               <li>
-                <Button onClick={ () => setImage(undefined) } color="red">
+                <Button onClick={() => setImage(undefined)} color="red">
                   Reset
                 </Button>
               </li>
