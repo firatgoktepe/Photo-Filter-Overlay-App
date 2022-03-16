@@ -64,9 +64,21 @@ export default function Home() {
   }, [image])
 
   const handleCaptureScreenshot = () => {
+    
+    if (!webcamRef.current) return
     const imageSrc = webcamRef.current.getScreenshot();
     setImage(imageSrc)
+  
   }
+
+  const resetCapturedScreenshot = () => {
+    setImage(undefined)
+    setCldData(undefined)
+   {<Webcam ref={webcamRef} videoConstraints={videoConstraints} width={cameraWidth} heigth={cameraHeight} />}
+
+  }
+
+ 
 
   return (
     <Layout>
@@ -96,7 +108,7 @@ export default function Home() {
                 </Button>
               </li>
               <li>
-                <Button onClick={() => setImage(undefined)} color="red">
+                <Button onClick={resetCapturedScreenshot} color="red">
                   Reset
                 </Button>
               </li>
