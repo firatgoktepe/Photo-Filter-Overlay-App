@@ -36,6 +36,7 @@ const OVERLAYS = [
   'dart-vader_qevxo6',
   'steven_s5tqo7',
   'trump-removebg-preview_dsmb0y',
+  '',
 
 ]
 
@@ -60,7 +61,8 @@ const ART_FILTERS = [
   'sizzle',
   'sonnet',
   'ukulele',
-  'zorro'
+  'zorro',
+  '',
 ];
 
 
