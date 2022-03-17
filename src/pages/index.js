@@ -32,6 +32,10 @@ const cloudinary = new Cloudinary({
   }
 });
 
+const OVERLAYS = [
+  'dart-vader_qevxo6',
+]
+
 const ART_FILTERS = [
   'al_dente',
   'athena',
@@ -63,11 +67,17 @@ export default function Home() {
   const [image, setImage] = useState()
   const [cldData, setCldData] = useState()
   const [filter, setFilter] = useState();
+  const [overlay, setOverlay] = useState();
 
   let src = image;
   const cldImage = cldData && cloudinary.image(cldData.public_id);
 
   if ( cldImage ) {
+
+    if ( overlay ) {
+      cldImage.addTransformation(`l_${overlay}/fl_layer_apply,fl_relative,g_faces,h_1.2,y_-0.05`)
+    }
+
     if ( filter ) {
       cldImage.effect(`e_art:${filter}`);
     }
@@ -145,7 +155,32 @@ export default function Home() {
         </div>
 
         <div className={styles.effects}>
+          {cldImage && 
+            <h2>Overlays</h2>
+          } 
+            <ul className={styles.filters}>
+            { cldImage && 
+              OVERLAYS.map(overlay => {
+                return (
+                  <li key={overlay} data-is-active-filter={false}>
+                    <button className={styles.filterThumb} onClick={() => setOverlay(overlay)}>
+                      <img width="100" height="100" src={
+                        cloudinary.image(cldData?.public_id)
+                          .resize('w_200,h_200')
+                          .addTransformation(`l_${overlay}/fl_layer_apply,fl_relative,g_faces,h_1.2,y_-0.05`)
+                          .toURL()
+                      } alt={overlay} />
+                      <span>{ overlay }</span>
+                    </button>
+                  </li>
+                )
+              })
+            } 
+            </ul>
+
+        {cldImage && 
           <h2>Filters</h2>
+        } 
           <ul className={styles.filters}>
           { cldImage && 
             ART_FILTERS.map(filter => {
