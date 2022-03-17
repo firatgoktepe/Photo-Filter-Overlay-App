@@ -35,6 +35,7 @@ const cloudinary = new Cloudinary({
 const OVERLAYS = [
   'dart-vader_qevxo6',
   'steven_s5tqo7',
+  'trump-removebg-preview_dsmb0y',
 
 ]
 
