@@ -38,6 +38,9 @@ const OVERLAYS = [
   'steven_s5tqo7',
   'trump-removebg-preview_dsmb0y',
   'noob-removebg-preview_fxiviv',
+  'cleetus_zextgc',
+  'hehe_i5plit',
+  'atkafasi_no6jrx',
   '',
 
 ]
