@@ -33,14 +33,14 @@ const cloudinary = new Cloudinary({
 });
 
 const OVERLAYS = [
-  'minnos-removebg-preview_scsv3y',
-  'dart-vader_qevxo6',
-  'steven_s5tqo7',
-  'trump-removebg-preview_dsmb0y',
-  'noob-removebg-preview_fxiviv',
-  'cleetus_zextgc',
-  'hehe_i5plit',
-  'atkafasi_no6jrx',
+  'minnos',
+  'dart-vader',
+  'steven',
+  'trump',
+  'noob',
+  'cleetus',
+  'hehe',
+  'atkafasi',
   '',
 
 ]
